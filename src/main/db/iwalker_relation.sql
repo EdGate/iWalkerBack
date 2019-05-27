@@ -6,5 +6,5 @@ CREATE TABLE `iwalker_relation` (
   `extra` text DEFAULT NULL,
   `create_time` datetime NULL DEFAULT CURRENT_TIMESTAMP,
   `modify_time` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
