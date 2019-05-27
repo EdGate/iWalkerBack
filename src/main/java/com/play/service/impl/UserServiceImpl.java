@@ -1,5 +1,6 @@
 package com.play.service.impl;
 
+import com.play.common.Const;
 import com.play.common.ServerResponse;
 import com.play.dao.UserMapper;
 import com.play.pojo.User;
@@ -32,5 +33,28 @@ public class UserServiceImpl implements IUserService {
         user.setPassword(StringUtils.EMPTY);
 
         return ServerResponse.createBySuccess("登录成功", user);
+    }
+
+    @Override
+    public ServerResponse<String> register(User user){
+        ServerResponse<String> validResponse = this.checkValid(user.getUserName());
+        if (!validResponse.isSuccess()){
+            return validResponse;
+        }
+        // MD5加密
+        user.setPassword(MD5Util.MD5EncodeUtf8(user.getPassword()));
+        int resultCount = userMapper.insertSelective(user);
+        if (resultCount == 0){
+            return ServerResponse.createByErrorMessage("注册失败");
+        }
+        return ServerResponse.createBySucessMessage("注册成功");
+    }
+
+    private ServerResponse<String> checkValid(String str){
+        int resultCount = userMapper.checkUsername(str);
+        if (resultCount > 0){
+            return ServerResponse.createByErrorMessage("用户名已存在");
+        }
+        return ServerResponse.createBySucessMessage("校验成功");
     }
 }

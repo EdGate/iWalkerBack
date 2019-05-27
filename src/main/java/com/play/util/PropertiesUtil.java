@@ -18,7 +18,7 @@ public class PropertiesUtil {
     private static Properties props;
 
     static {
-        String fileName = "mmall.properties";
+        String fileName = "play.properties";
         props = new Properties();
         try {
             props.load(new InputStreamReader(PropertiesUtil.class.getClassLoader().getResourceAsStream(fileName),"UTF-8"));
@@ -47,7 +47,4 @@ public class PropertiesUtil {
         }
         return value.trim();
     }
-
-
-
 }
