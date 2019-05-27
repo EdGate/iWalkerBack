@@ -1,5 +1,6 @@
 package com.play.common;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import java.io.Serializable;
@@ -41,6 +42,12 @@ public class ServerResponse<T> implements Serializable {
 
     public T getData() {
         return data;
+    }
+
+    // 使不json序列化
+    @JsonIgnore
+    public boolean isSuccess(){
+        return this.status == ResponseCode.SUCCESS.getCode();
     }
 
     public static <T> ServerResponse<T> createBySuccess(){
