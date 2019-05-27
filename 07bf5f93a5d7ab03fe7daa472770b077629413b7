@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "273a75dd_ddaf9383",
+        "filename": ".gitignore",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1016567
+      },
+      "writtenOn": "2019-05-27T05:51:24Z",
+      "side": 1,
+      "message": "*.properties",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 21
+      },
+      "revId": "07bf5f93a5d7ab03fe7daa472770b077629413b7",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}
