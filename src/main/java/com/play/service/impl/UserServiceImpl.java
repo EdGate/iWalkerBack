@@ -51,7 +51,7 @@ public class UserServiceImpl implements IUserService {
         if (resultCount == 0){
             return ServerResponse.createByErrorMessage("注册失败");
         }
-        return ServerResponse.createBySucessMessage("注册成功");
+        return ServerResponse.createBySuccessMessage("注册成功");
     }
 
     private ServerResponse<String> checkValid(String str){
@@ -59,11 +59,11 @@ public class UserServiceImpl implements IUserService {
         if (resultCount > 0){
             return ServerResponse.createByErrorMessage("用户名已存在");
         }
-        return ServerResponse.createBySucessMessage("校验成功");
+        return ServerResponse.createBySuccessMessage("校验成功");
     }
 
     @Override
-    public ServerResponse<User> modify(User user, MultipartFile file) throws IOException {
+    public ServerResponse<User> modify(User user, MultipartFile file) {
         int resultCount = userMapper.checkUsername(user.getUserName());
         if (resultCount == 0) {
             return ServerResponse.createByErrorMessage("用户不存在！");
@@ -82,10 +82,17 @@ public class UserServiceImpl implements IUserService {
         if (file != null) {
             String path = ImageUtil.getImagePath(file);
             user.setImage(ImageUtil.getImageName(file));
-            file.transferTo(new File(path));
+            try {
+                file.transferTo(new File(path));
+            } catch (IOException e) {
+                return ServerResponse.createByErrorMessage("修改信息失败！");
+            }
         }
 
-        userMapper.updateByPrimaryKeySelective(user);
+        int resCount = userMapper.updateByPrimaryKeySelective(user);
+        if (resCount == 0) {
+            return ServerResponse.createByErrorMessage("修改信息失败！");
+        }
         return ServerResponse.createBySuccessData(user);
     }
 }
