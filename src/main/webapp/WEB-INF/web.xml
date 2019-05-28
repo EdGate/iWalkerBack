@@ -36,6 +36,14 @@
     </param-value>
   </context-param>
 
+  <context-param>
+    <param-name>webAppRootKey</param-name>
+    <param-value>evan.webapp</param-value>
+  </context-param>
+  <listener>
+    <listener-class>org.springframework.web.util.WebAppRootListener</listener-class>
+  </listener>
+
   <servlet>
     <servlet-name>dispatcher</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>

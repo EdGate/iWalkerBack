@@ -175,4 +175,10 @@
     from iwalker_user
     where user_name = #{username} and password = #{password}
   </select>
+
+  <select id="getPrimaryKeyByUsername" resultType="int" parameterType="string">
+    select id
+    from iwalker_user
+    where user_name = #{username}
+  </select>
 </mapper>

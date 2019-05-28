@@ -1,14 +1,18 @@
 package com.play.service.impl;
 
-import com.play.common.Const;
 import com.play.common.ServerResponse;
 import com.play.dao.UserMapper;
 import com.play.pojo.User;
 import com.play.service.IUserService;
+import com.play.util.ImageUtil;
 import com.play.util.MD5Util;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.File;
+import java.io.IOException;
 
 @Service("iUserService")
 public class UserServiceImpl implements IUserService {
@@ -56,5 +60,32 @@ public class UserServiceImpl implements IUserService {
             return ServerResponse.createByErrorMessage("用户名已存在");
         }
         return ServerResponse.createBySucessMessage("校验成功");
+    }
+
+    @Override
+    public ServerResponse<User> modify(User user, MultipartFile file) throws IOException {
+        int resultCount = userMapper.checkUsername(user.getUserName());
+        if (resultCount == 0) {
+            return ServerResponse.createByErrorMessage("用户不存在！");
+        }
+        // 设置用户 id
+        int id = userMapper.getPrimaryKeyByUsername(user.getUserName());
+        if (id != user.getId()) {
+            return ServerResponse.createByErrorMessage("无权限操作！");
+        }
+        // 不能修改
+        user.setPassword(null);
+        user.setCreateTime(null);
+        user.setModifyTime(null);
+
+        // 如果有传头像
+        if (file != null) {
+            String path = ImageUtil.getImagePath(file);
+            user.setImage(ImageUtil.getImageName(file));
+            file.transferTo(new File(path));
+        }
+
+        userMapper.updateByPrimaryKeySelective(user);
+        return ServerResponse.createBySuccessData(user);
     }
 }
