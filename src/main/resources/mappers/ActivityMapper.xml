@@ -140,4 +140,24 @@
       modify_time = #{modifyTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectLastByUserName" resultMap="BaseResultMap" parameterType="string" >
+    select
+    <include refid="Base_Column_List" />
+    from iwalker_activity
+    where user_name = #{username} order by create_time desc limit 0,1
+  </select>
+
+  <select id="countByUserNameId" resultType="int" parameterType="map" >
+    select
+    count(1)
+    from iwalker_activity
+    where user_name = #{username} and id = #{id}
+  </select>
+
+  <select id="selectByUserName" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from iwalker_activity
+    where user_name = #{username} order by create_time desc limit #{offset}, #{limit}
+  </select>
 </mapper>

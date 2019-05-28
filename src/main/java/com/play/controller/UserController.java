@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 
 @Controller
 @RequestMapping("/user/")
@@ -44,7 +43,7 @@ public class UserController {
     @RequestMapping(value = "modify.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<User> modify(@RequestParam(value = "file",required = false) MultipartFile file, User user,
-                                       HttpSession session) throws IOException {
+                                       HttpSession session) {
         User currentUser = (User) session.getAttribute(Const.CURRENT_USER);
         if (currentUser == null){
             return ServerResponse.createByErrorMessage("用户未登录");
