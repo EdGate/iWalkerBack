@@ -1,4 +1,4 @@
-CREATE TABLE `iwalker_activity` (
+CREATE TABLE `iwalker_comment` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_name` varchar(20) NOT NULL,
   `activity_id` int(11) unsigned NOT NULL,
