@@ -1,7 +1,11 @@
 package com.play.service.impl;
 
+import com.google.common.collect.Lists;
+import com.play.common.Const;
 import com.play.common.ServerResponse;
+import com.play.dao.RelationMapper;
 import com.play.dao.UserMapper;
+import com.play.pojo.Relation;
 import com.play.pojo.User;
 import com.play.service.IUserService;
 import com.play.util.ImageUtil;
@@ -13,12 +17,15 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 @Service("iUserService")
 public class UserServiceImpl implements IUserService {
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private RelationMapper relationMapper;
 
     @Override
     public ServerResponse<User> login(String username, String password) {
@@ -95,4 +102,31 @@ public class UserServiceImpl implements IUserService {
         }
         return ServerResponse.createBySuccessData(user);
     }
+
+    @Override
+    public ServerResponse<List<User>> findfriend(User user,String findname){
+
+        List<User> resultUser = userMapper.findUser("%"+findname+"%");
+        List<User> newresultUser=Lists.newArrayList();
+        if (resultUser==null) {
+            return ServerResponse.createByErrorMessage("用户不存在！");
+        }
+        else{
+
+            for(User oneresultUser:resultUser){
+                Relation relation=relationMapper.getfriend(user.getUserName(),oneresultUser.getUserName());
+                if(relation==null||relation.getStatus()!= Const.RELATION_STATUS.IS_FRIEND){
+                    oneresultUser.setPassword(StringUtils.EMPTY);
+                    oneresultUser.setCreateTime(null);
+                    oneresultUser.setModifyTime(null);
+                    oneresultUser.setExtra(null);
+                    newresultUser.add(oneresultUser);
+                }
+            }
+        }
+        return ServerResponse.createBySuccess("查询成功", newresultUser);
+    }
+
+
+
 }

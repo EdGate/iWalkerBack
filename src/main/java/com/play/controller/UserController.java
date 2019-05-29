@@ -14,6 +14,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 
+import java.util.List;
+
+
 @Controller
 @RequestMapping("/user/")
 public class UserController {
@@ -72,4 +75,17 @@ public class UserController {
         }
         return ServerResponse.createBySuccessData(currentUser);
     }
+
+    //非好友搜索
+    @RequestMapping(value = "findfriend.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<List<User>> findfriend(String findname, HttpSession session) {
+        User currentUser = (User) session.getAttribute(Const.CURRENT_USER);
+        if (currentUser == null){
+            return ServerResponse.createByErrorMessage("用户未登录");
+        }
+        return iUserService.findfriend(currentUser,findname);
+    }
+
+
 }
