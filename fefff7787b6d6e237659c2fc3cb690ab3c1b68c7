@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4c21fbb_a023a7bb",
+        "filename": "src/main/java/com/play/service/impl/RelationServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1016567
+      },
+      "writtenOn": "2019-05-29T01:25:45Z",
+      "side": 1,
+      "message": "应该从session中获取当前用户名",
+      "range": {
+        "startLine": 31,
+        "startChar": 8,
+        "endLine": 31,
+        "endChar": 39
+      },
+      "revId": "fefff7787b6d6e237659c2fc3cb690ab3c1b68c7",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f56958c_19966ae2",
+        "filename": "src/main/java/com/play/service/impl/RelationServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1016567
+      },
+      "writtenOn": "2019-05-29T01:25:45Z",
+      "side": 1,
+      "message": "有些参数，比如create_time,modify_time,先置为null，确保不会被修改",
+      "range": {
+        "startLine": 38,
+        "startChar": 39,
+        "endLine": 38,
+        "endChar": 47
+      },
+      "revId": "fefff7787b6d6e237659c2fc3cb690ab3c1b68c7",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0530a3d3_3fa340fe",
+        "filename": "src/main/java/com/play/service/impl/RelationServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1016567
+      },
+      "writtenOn": "2019-05-29T01:25:45Z",
+      "side": 1,
+      "message": "确定一下这个对象有没有id？？还有update与insert的返回结果都判断一下是不是等于0，等于0的话返回操作失败\nselect操作判断一下返回是不是null，是null返回操作失败。下同",
+      "range": {
+        "startLine": 48,
+        "startChar": 51,
+        "endLine": 48,
+        "endChar": 59
+      },
+      "revId": "fefff7787b6d6e237659c2fc3cb690ab3c1b68c7",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "914d025b_8163558c",
+        "filename": "src/main/java/com/play/service/impl/RelationServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1016567
+      },
+      "writtenOn": "2019-05-29T01:25:45Z",
+      "side": 1,
+      "message": "判断一下是不是null，如果是null操作数据库是失败的",
+      "range": {
+        "startLine": 53,
+        "startChar": 23,
+        "endLine": 53,
+        "endChar": 34
+      },
+      "revId": "fefff7787b6d6e237659c2fc3cb690ab3c1b68c7",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a37e727d_e355eafc",
+        "filename": "src/main/java/com/play/service/impl/RelationServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1016567
+      },
+      "writtenOn": "2019-05-29T01:25:45Z",
+      "side": 1,
+      "message": "for(Relation xxx : friendname) {\n    xxx\n}\n可以用这种语法",
+      "range": {
+        "startLine": 62,
+        "startChar": 8,
+        "endLine": 62,
+        "endChar": 45
+      },
+      "revId": "fefff7787b6d6e237659c2fc3cb690ab3c1b68c7",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}
