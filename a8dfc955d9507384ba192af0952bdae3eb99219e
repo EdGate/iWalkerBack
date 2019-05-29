@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "013ddfc9_d27aaab5",
+        "filename": "src/main/java/com/play/controller/RelationController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1016567
+      },
+      "writtenOn": "2019-05-29T00:56:40Z",
+      "side": 1,
+      "message": "User currentUser \u003d (User) session.getAttribute(Const.CURRENT_USER);\n        if (currentUser \u003d\u003d null){\n            return ServerResponse.createByErrorMessage(\"用户未登录\");\n        }// 是否登录，下同",
+      "range": {
+        "startLine": 35,
+        "startChar": 3,
+        "endLine": 41,
+        "endChar": 5
+      },
+      "revId": "a8dfc955d9507384ba192af0952bdae3eb99219e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
+    }
+  ]
+}
