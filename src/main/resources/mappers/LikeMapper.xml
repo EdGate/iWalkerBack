@@ -105,4 +105,18 @@
       modify_time = #{modifyTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <delete id="deleteByActivityIDUserName" parameterType="map" >
+    delete from iwalker_like
+    where activity_id = #{activityid}
+    and user_id = #{userid}
+  </delete>
+
+  <select id="getByActivityIDUserName" resultMap="BaseResultMap" parameterType="map" >
+    select
+    <include refid="Base_Column_List" />
+    from iwalker_like
+    where activity_id = #{activityid}
+    and user_id = #{userid}
+  </select>
 </mapper>

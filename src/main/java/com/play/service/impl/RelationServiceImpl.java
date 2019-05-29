@@ -31,7 +31,7 @@ public class RelationServiceImpl implements IRelationService {
         byte default_status=0;
         relation.setStatus(default_status);
         Relation judgerelation=relationMapper.getfriend(applicant,receiver);
-        if(judgerelation!=null&&judgerelation.getStatus()!=2&&judgerelation.getStatus()!=3){
+        if(judgerelation!=null&&judgerelation.getStatus()!=Const.RELATION_STATUS.REFUSE&&judgerelation.getStatus()!=Const.RELATION_STATUS.DELETE){
             if (judgerelation.getStatus() == 0) {
                 if (judgerelation.getApplicant().equals(receiver)){
                     return ServerResponse.createBySuccessMessage("对方已向你提出申请，请在申请列表确认");

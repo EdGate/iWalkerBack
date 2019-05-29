@@ -116,4 +116,12 @@
       modify_time = #{modifyTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="showComment" resultMap="BaseResultMap" parameterType="map" >
+  select
+  <include refid="Base_Column_List" />
+  from iwalker_comment
+  where activity_id=#{activityid}
+  order by create_time desc limit #{offset}, #{limit}
+</select>
+
 </mapper>

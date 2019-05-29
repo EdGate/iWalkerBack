@@ -109,7 +109,7 @@ public class UserServiceImpl implements IUserService {
         List<User> resultUser = userMapper.findUser("%"+findname+"%");
         List<User> newresultUser=Lists.newArrayList();
         if (resultUser==null) {
-            return ServerResponse.createByErrorMessage("用户不存在！");
+            return ServerResponse.createBySuccessMessage("用户不存在！");
         }
         else{
 

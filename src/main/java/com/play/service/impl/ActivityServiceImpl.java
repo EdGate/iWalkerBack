@@ -4,9 +4,11 @@ import com.google.common.collect.Lists;
 import com.play.common.ServerResponse;
 import com.play.dao.ActivityMapper;
 import com.play.dao.ImageMapper;
+import com.play.dao.LikeMapper;
 import com.play.dao.RelationMapper;
 import com.play.pojo.Activity;
 import com.play.pojo.Image;
+import com.play.pojo.Like;
 import com.play.pojo.User;
 import com.play.service.IActivityService;
 import com.play.vo.ActivityImageVo;
@@ -24,6 +26,8 @@ public class ActivityServiceImpl implements IActivityService {
     private ImageMapper imageMapper;
     @Autowired
     private RelationMapper relationMapper;
+    @Autowired
+    private LikeMapper likeMapper;
 
     @Override
     public ServerResponse<Activity> create(Activity activity) {
@@ -123,6 +127,7 @@ public class ActivityServiceImpl implements IActivityService {
         return ServerResponse.createBySuccessData(activityList);
     }
 
+
     private ActivityImageVo createActivityImageVo(Activity activity) {
         List<Image> imageList = imageMapper.selectImageByActivityId(activity.getId());
         ActivityImageVo activityImageVo = new ActivityImageVo();
@@ -138,4 +143,5 @@ public class ActivityServiceImpl implements IActivityService {
         activityImageVo.setUserName(activity.getUserName());
         return activityImageVo;
     }
+
 }
