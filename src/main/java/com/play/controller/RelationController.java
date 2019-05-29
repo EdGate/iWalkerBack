@@ -38,9 +38,7 @@ public class RelationController {
             return ServerResponse.createByErrorMessage("用户未登录");
         }
         ServerResponse<String> response = iRelationService.addfriend(applicant,receiver);
-        if (response.isSuccess()){
-            session.setAttribute(CURRENT_USER, response.getData());
-        }
+
         return response;
     }
 
@@ -53,9 +51,7 @@ public class RelationController {
             return ServerResponse.createByErrorMessage("用户未登录");
         }
         ServerResponse<String> response = iRelationService.confirmfriend(applicant,receiver,status);
-        if (response.isSuccess()){
-            session.setAttribute(CURRENT_USER, response.getData());
-        }
+
         return response;
     }
 
@@ -68,9 +64,7 @@ public class RelationController {
         if (currentUser == null){
             return ServerResponse.createByErrorMessage("用户未登录");
         }
-        if (response.isSuccess()){
-            session.setAttribute(CURRENT_USER, response.getData());
-        }
+
         return response;
     }
 
@@ -83,9 +77,6 @@ public class RelationController {
         }
         ServerResponse<List<User>> response=iRelationService.showfriend(user);
 
-        if (response.isSuccess()){
-            session.setAttribute(Const.CURRENT_USER, response.getData());
-        }
         return response;
     }
     //删除好友
@@ -97,9 +88,7 @@ public class RelationController {
             return ServerResponse.createByErrorMessage("用户未登录");
         }
         ServerResponse<String> response=iRelationService.delfriend(user,delname);
-        if (response.isSuccess()){
-            session.setAttribute(CURRENT_USER, response.getData());
-        }
+
         return response;
     }
 

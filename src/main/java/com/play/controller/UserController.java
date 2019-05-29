@@ -86,9 +86,7 @@ public class UserController {
             return ServerResponse.createByErrorMessage("用户未登录");
         }
         ServerResponse<List<User>> response = iUserService.findfriend(findname);
-        if (response.isSuccess()){
-            session.setAttribute(Const.CURRENT_USER, response.getData());
-        }
+
         return response;
     }
 
@@ -103,9 +101,7 @@ public class UserController {
             return ServerResponse.createByErrorMessage("用户未登录");
         }
         ServerResponse<User> response=iUserService.touchfriend(user);
-        if (response.isSuccess()){
-            session.setAttribute(Const.CURRENT_USER, response.getData());
-        }
+
         return response;
     }
 }
