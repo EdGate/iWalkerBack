@@ -116,4 +116,44 @@
       modify_time = #{modifyTime,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+    <select id="findStatus1" resultMap="BaseResultMap" parameterType="map">
+      select
+      <include refid="Base_Column_List" />
+      from iwalker_relation
+      where applicant = #{showname}
+      or receiver = #{showname}
+      and status = 1
+    </select>
+    <select id="showrequest" resultMap="BaseResultMap" parameterType="map">
+      select
+      <include refid="Base_Column_List" />
+      from iwalker_relation
+      where receiver = #{receiver}
+      and status = 0
+    </select>
+    <update id="deleteByUsername" parameterType="java.lang.Integer">
+      update iwalker_relation
+      set status = 4
+      where (applicant = #{namedel}
+      or receiver = #{namedel})
+      and  (applicant = #{delname}
+      or receiver = #{delname})
+    </update>
+    <select id="showfriend" resultMap="BaseResultMap" parameterType="map">
+      select
+      <include refid="Base_Column_List" />
+      from iwalker_relation
+      where (applicant = #{myname}
+      or receiver = #{myname})
+      and status = 1
+    </select>
+    <select id="getfriendStatus" resultType="int" parameterType="map">
+      select status from iwalker_user
+      where (applicant = #{applicant}
+      or receiver = #{applicant})
+      and  (applicant = #{receiver}
+      or receiver = #{receiver})
+    </select>
+
 </mapper>
