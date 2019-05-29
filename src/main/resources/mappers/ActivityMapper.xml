@@ -160,4 +160,11 @@
     from iwalker_activity
     where user_name = #{username} order by create_time desc limit #{offset}, #{limit}
   </select>
+
+  <select id="selectByLocationName" parameterType="string" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from iwalker_activity
+    where location_name = #{locationName}
+    order by create_time desc limit 0,10
+  </select>
 </mapper>

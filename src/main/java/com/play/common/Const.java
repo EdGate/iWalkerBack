@@ -7,10 +7,10 @@ public class Const {
     public static final Integer MAX_UPLOAD_NUM = 9;
 
     public static interface RELATION_STATUS {
-        public static final byte APPLICANT = 0;
-        public static final byte IS_FRIEND = 1;
-        public static final byte REFUSE = 2;
-        public static final byte DELETE= 3;
+        byte APPLICANT = 0;
+        byte IS_FRIEND = 1;
+        byte REFUSE = 2;
+        byte DELETE= 3;
 
     }
 }

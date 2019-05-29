@@ -13,10 +13,7 @@ import com.play.vo.ActivityImageVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
 @Service("iActivityService")
 public class ActivityServiceImpl implements IActivityService {
@@ -113,6 +110,17 @@ public class ActivityServiceImpl implements IActivityService {
         }
 
         return ServerResponse.createBySuccessData(activityImageVoList);
+    }
+
+    @Override
+    public ServerResponse<List<Activity>> getActivitiesByLocationName(String locationName) {
+        List<Activity> activityList = activityMapper.selectByLocationName(locationName);
+        for (Activity activity : activityList) {
+            activity.setUserName(null);
+            activity.setLikeNum(null);
+            activity.setExtra(null);
+        }
+        return ServerResponse.createBySuccessData(activityList);
     }
 
     private ActivityImageVo createActivityImageVo(Activity activity) {

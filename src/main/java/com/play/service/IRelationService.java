@@ -3,9 +3,7 @@ package com.play.service;
 import com.play.common.ServerResponse;
 import com.play.pojo.Relation;
 import com.play.pojo.User;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
 import java.util.List;
 
 public interface IRelationService {

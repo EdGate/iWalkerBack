@@ -24,4 +24,5 @@ public interface ActivityMapper {
 
     List<Activity> selectByUserName(@Param("username") String username, @Param("limit") Integer limit,
                                     @Param("offset") Integer offset);
+    List<Activity> selectByLocationName(String locationName);
 }

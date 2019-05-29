@@ -13,4 +13,5 @@ public interface IActivityService {
     ServerResponse<String> deleteActivity(Integer activityId, User user);
     ServerResponse<ActivityImageVo> getActivityInfo(Integer activityId, User user);
     ServerResponse<List<ActivityImageVo>> getActivitiesByUser(String userName, User user, Integer limit, Integer offset);
+    ServerResponse<List<Activity>> getActivitiesByLocationName(String locationName);
 }

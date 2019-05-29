@@ -77,4 +77,15 @@ public class ActivityController {
         }
         return iActivityService.getActivitiesByUser(userName, currentUser, limit, offset);
     }
+
+
+    @RequestMapping(value = "get_activities_by_location_name.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<List<Activity>> getActivitiesByLocationName(String locationName, HttpSession session) {
+        User currentUser = (User) session.getAttribute(Const.CURRENT_USER);
+        if (currentUser == null){
+            return ServerResponse.createByErrorMessage("用户未登录");
+        }
+        return iActivityService.getActivitiesByLocationName(locationName);
+    }
 }
