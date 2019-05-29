@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 @Service("iUserService")
 public class UserServiceImpl implements IUserService {
@@ -95,4 +96,29 @@ public class UserServiceImpl implements IUserService {
         }
         return ServerResponse.createBySuccessData(user);
     }
+
+    @Override
+    public ServerResponse<List<User>> findfriend(String findname){
+
+        List<User> resultUser = userMapper.findUser(findname);
+        if (resultUser==null) {
+            return ServerResponse.createByErrorMessage("用户不存在！");
+        }
+        else{
+            for(User oneresultUser:resultUser){
+                oneresultUser.setPassword(StringUtils.EMPTY);
+            }
+        }
+        return ServerResponse.createBySuccess("查询成功", resultUser);
+    }
+
+    @Override
+    public ServerResponse<User> touchfriend(User user){
+        User userinfo=userMapper.findUserByUsername(user.getUserName());
+        if(userinfo==null){
+            return ServerResponse.createByErrorMessage("好友不存在！");
+        }
+        return ServerResponse.createBySuccess("点击好友成功",userinfo);
+    }
+
 }

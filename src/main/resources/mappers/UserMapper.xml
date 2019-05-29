@@ -181,4 +181,19 @@
     from iwalker_user
     where user_name = #{username}
   </select>
+
+  <select id="findUser" resultMap="BaseResultMap" parameterType="map">
+    select *
+    from iwalker_user
+    where user_name = #{findname}
+    or nickname = #{findname}
+  </select>
+
+  <select id="findUserByUsername" resultMap="BaseResultMap" parameterType="map">
+    select
+    <include refid="Base_Column_List" />
+    from iwalker_user
+    where user_name = #{findusername}
+
+  </select>
 </mapper>
