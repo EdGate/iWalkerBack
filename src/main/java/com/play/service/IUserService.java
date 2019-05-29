@@ -5,8 +5,17 @@ import com.play.pojo.User;
 import org.springframework.web.multipart.MultipartFile;
 
 
+import java.io.IOException;
+import java.util.List;
+
 public interface IUserService {
     ServerResponse<User> login(String username, String password);
     ServerResponse<String> register(User user);
+
     ServerResponse<User> modify(User user, MultipartFile file);
+
+
+    ServerResponse<List<User>> findfriend(String findname);
+
+    ServerResponse<User> touchfriend(User user);
 }
