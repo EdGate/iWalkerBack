@@ -18,6 +18,4 @@ public interface IUserService {
     ServerResponse<List<User>> findfriend(String findname);
 
     ServerResponse<User> touchfriend(User user);
-
-    User findUserByUsername(String findusername);
 }

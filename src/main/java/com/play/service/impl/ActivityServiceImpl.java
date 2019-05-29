@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import com.play.common.ServerResponse;
 import com.play.dao.ActivityMapper;
 import com.play.dao.ImageMapper;
+import com.play.dao.RelationMapper;
 import com.play.pojo.Activity;
 import com.play.pojo.Image;
 import com.play.pojo.User;
@@ -24,6 +25,8 @@ public class ActivityServiceImpl implements IActivityService {
     private ActivityMapper activityMapper;
     @Autowired
     private ImageMapper imageMapper;
+    @Autowired
+    private RelationMapper relationMapper;
 
     @Override
     public ServerResponse<Activity> create(Activity activity) {
@@ -82,8 +85,11 @@ public class ActivityServiceImpl implements IActivityService {
     public ServerResponse<ActivityImageVo> getActivityInfo(Integer activityId, User user) {
         Activity activity = activityMapper.selectByPrimaryKey(activityId);
         // TODO: 判断是否是好友关系, 好友关系可以查看动态
+
         if (activity == null || !activity.getUserName().equals(user.getUserName())) {
-            return ServerResponse.createByErrorMessage("无权限操作！");
+            if(relationMapper.getfriendStatus(user.getUserName(),activity.getUserName())!=1){//判断是否为好友 1为好友状态
+                return ServerResponse.createByErrorMessage("无权限操作--不是好友");
+            }
         }
 
         ActivityImageVo activityImageVo = createActivityImageVo(activity);
@@ -94,6 +100,11 @@ public class ActivityServiceImpl implements IActivityService {
     public ServerResponse<List<ActivityImageVo>> getActivitiesByUser(String userName, User user,
                                                                      Integer limit, Integer offset) {
         // TODO: 判断是否是好友关系
+        if(!userName.equals(user.getUserName())){//判断是否是本人
+            if(relationMapper.getfriendStatus(user.getUserName(),userName)!=1){//判断是否为好友 1为好友状态
+                return ServerResponse.createByErrorMessage("无权限操作--不是好友");
+            }
+        }
 
         List<ActivityImageVo> activityImageVoList = Lists.newArrayList();
         List<Activity> activityList = activityMapper.selectByUserName(userName, limit, offset);
