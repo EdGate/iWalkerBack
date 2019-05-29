@@ -137,6 +137,29 @@
       "revId": "fefff7787b6d6e237659c2fc3cb690ab3c1b68c7",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "408b0469_cba4ef12",
+        "filename": "src/main/java/com/play/service/impl/RelationServiceImpl.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1016567
+      },
+      "writtenOn": "2019-05-29T01:41:14Z",
+      "side": 1,
+      "message": "friendList 没有new就add不会报错吗？\n可以用 List\u003cUser\u003e friendList \u003d Lists.newArrayList();",
+      "range": {
+        "startLine": 64,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 32
+      },
+      "revId": "fefff7787b6d6e237659c2fc3cb690ab3c1b68c7",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735",
+      "unresolved": true
     }
   ]
 }
