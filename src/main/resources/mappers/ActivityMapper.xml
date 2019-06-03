@@ -168,5 +168,13 @@
     order by create_time desc limit 0,10
   </select>
 
-
+  <select id="selectByUserNames" parameterType="map" resultMap="BaseResultMap">
+    select <include refid="Base_Column_List" />
+    from iwalker_activity
+    where user_name in
+    <foreach item="item" index="index" collection="username" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+    order by create_time desc limit #{offset}, #{limit}
+  </select>
 </mapper>
