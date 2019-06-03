@@ -93,6 +93,12 @@ public class ActivityServiceImpl implements IActivityService {
         }
 
         ActivityImageVo activityImageVo = createActivityImageVo(activity);
+        Like like = likeMapper.getByActivityIDUserName(activityId, user.getId());
+        if (like == null) {
+            activityImageVo.setLike(false);
+        } else {
+            activityImageVo.setLike(true);
+        }
         return ServerResponse.createBySuccessData(activityImageVo);
     }
 
@@ -110,6 +116,12 @@ public class ActivityServiceImpl implements IActivityService {
         List<Activity> activityList = activityMapper.selectByUserName(userName, limit, offset);
         for (Activity activity : activityList) {
             ActivityImageVo activityImageVo = createActivityImageVo(activity);
+            Like like = likeMapper.getByActivityIDUserName(activity.getId(), user.getId());
+            if (like == null) {
+                activityImageVo.setLike(false);
+            } else {
+                activityImageVo.setLike(true);
+            }
             activityImageVoList.add(activityImageVo);
         }
 

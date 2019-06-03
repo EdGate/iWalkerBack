@@ -25,6 +25,16 @@ public class ActivityImageVo {
 
     private Date modifyTime;
 
+    public boolean isLike() {
+        return isLike;
+    }
+
+    public void setLike(boolean like) {
+        isLike = like;
+    }
+
+    private boolean isLike;
+
     private List<Image> images;
 
     public List<Image> getImages() {
