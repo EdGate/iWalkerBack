@@ -6,10 +6,7 @@ import com.play.dao.ActivityMapper;
 import com.play.dao.ImageMapper;
 import com.play.dao.LikeMapper;
 import com.play.dao.RelationMapper;
-import com.play.pojo.Activity;
-import com.play.pojo.Image;
-import com.play.pojo.Like;
-import com.play.pojo.User;
+import com.play.pojo.*;
 import com.play.service.IActivityService;
 import com.play.vo.ActivityImageVo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,20 +109,8 @@ public class ActivityServiceImpl implements IActivityService {
             }
         }
 
-        List<ActivityImageVo> activityImageVoList = Lists.newArrayList();
         List<Activity> activityList = activityMapper.selectByUserName(userName, limit, offset);
-        for (Activity activity : activityList) {
-            ActivityImageVo activityImageVo = createActivityImageVo(activity);
-            Like like = likeMapper.getByActivityIDUserName(activity.getId(), user.getId());
-            if (like == null) {
-                activityImageVo.setLike(false);
-            } else {
-                activityImageVo.setLike(true);
-            }
-            activityImageVoList.add(activityImageVo);
-        }
-
-        return ServerResponse.createBySuccessData(activityImageVoList);
+        return ServerResponse.createBySuccessData(transformActivitiesToVo(activityList, user));
     }
 
     @Override
@@ -139,6 +124,37 @@ public class ActivityServiceImpl implements IActivityService {
         return ServerResponse.createBySuccessData(activityList);
     }
 
+    @Override
+    public ServerResponse<List<ActivityImageVo>> getAllActivities(Integer limit, Integer offset, User user) {
+        List<Relation> relationList = relationMapper.showfriend(user.getUserName());
+        // 构造查询的用户名
+        List<String> nameList = Lists.newArrayList();
+        for (Relation relation : relationList) {
+            if (relation.getApplicant().equals(user.getUserName())) {
+                nameList.add(relation.getReceiver());
+            } else {
+                nameList.add(relation.getApplicant());
+            }
+        }
+        nameList.add(user.getUserName());
+        List<Activity> activityList = activityMapper.selectByUserNames(nameList, limit, offset);
+        return ServerResponse.createBySuccessData(transformActivitiesToVo(activityList, user));
+    }
+
+    private List<ActivityImageVo> transformActivitiesToVo(List<Activity> activityList, User user) {
+        List<ActivityImageVo> activityImageVoList = Lists.newArrayList();
+        for (Activity activity : activityList) {
+            ActivityImageVo activityImageVo = createActivityImageVo(activity);
+            Like like = likeMapper.getByActivityIDUserName(activity.getId(), user.getId());
+            if (like == null) {
+                activityImageVo.setLike(false);
+            } else {
+                activityImageVo.setLike(true);
+            }
+            activityImageVoList.add(activityImageVo);
+        }
+        return activityImageVoList;
+    }
 
     private ActivityImageVo createActivityImageVo(Activity activity) {
         List<Image> imageList = imageMapper.selectImageByActivityId(activity.getId());

@@ -88,4 +88,14 @@ public class ActivityController {
         }
         return iActivityService.getActivitiesByLocationName(locationName);
     }
+
+    @RequestMapping(value = "get_all_activities.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<List<ActivityImageVo>> getAllActivities(Integer limit, Integer offset, HttpSession session) {
+        User currentUser = (User) session.getAttribute(Const.CURRENT_USER);
+        if (currentUser == null){
+            return ServerResponse.createByErrorMessage("用户未登录");
+        }
+        return iActivityService.getAllActivities(limit, offset, currentUser);
+    }
 }

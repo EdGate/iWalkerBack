@@ -1,5 +1,6 @@
 package com.play.dao;
 
+import com.google.common.collect.Lists;
 import com.play.pojo.Activity;
 import org.apache.ibatis.annotations.Param;
 
@@ -25,4 +26,7 @@ public interface ActivityMapper {
     List<Activity> selectByUserName(@Param("username") String username, @Param("limit") Integer limit,
                                     @Param("offset") Integer offset);
     List<Activity> selectByLocationName(String locationName);
+
+    List<Activity> selectByUserNames(@Param("username") List<String> username, @Param("limit") Integer limit,
+                                     @Param("offset") Integer offset);
 }
