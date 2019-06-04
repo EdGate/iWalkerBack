@@ -1,6 +1,7 @@
 package com.play.dao;
 
 import com.play.pojo.Relation;
+import com.play.pojo.User;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

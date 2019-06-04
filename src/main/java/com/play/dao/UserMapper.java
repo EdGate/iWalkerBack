@@ -28,5 +28,6 @@ public interface UserMapper {
 
     User findUserByUsername(@Param("findusername") String findusername);
 
+    User showRequestUserbyRelation(String username);
 
 }

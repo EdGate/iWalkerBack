@@ -70,12 +70,32 @@ public class RelationServiceImpl implements IRelationService {
         return ServerResponse.createBySuccessMessage("好友请求确认");
     }
     @Override
-    public ServerResponse<List<Relation>> showrequest(User user){
+    public ServerResponse<List<User>> showrequest(User user){
         List<Relation> requestlist= relationMapper.showrequest(user.getUserName());
+        List<User> allrequest = Lists.newArrayList();
         if(requestlist==null){
             return ServerResponse.createBySuccessMessage("显示好友请求列表空");
         }
-        return ServerResponse.createBySuccess("显示好友请求列表成功",requestlist);
+        for(Relation onerequestlist:requestlist){
+            if(onerequestlist.getApplicant().equals(user.getUserName())){
+                User test1=userMapper.showRequestUserbyRelation(onerequestlist.getReceiver());
+                if(test1!=null){
+                    test1.setPassword(null);
+                    test1.setCreateTime(null);
+                    test1.setModifyTime(null);
+                    allrequest.add(test1);
+                }
+            }else{
+                User test2=userMapper.showRequestUserbyRelation(onerequestlist.getApplicant());
+                if(test2!=null){
+                    test2.setPassword(null);
+                    test2.setCreateTime(null);
+                    test2.setModifyTime(null);
+                    allrequest.add(test2);
+                }
+            }
+        }
+        return ServerResponse.createBySuccess("显示好友请求列表成功",allrequest);
     }
 
     @Override
