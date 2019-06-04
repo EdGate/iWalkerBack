@@ -133,6 +133,8 @@
       and status = 0
       order by create_time desc
     </select>
+
+
     <update id="deleteByUsername" parameterType="java.lang.Integer">
       update iwalker_relation
       set status = 4

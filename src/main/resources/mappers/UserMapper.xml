@@ -196,4 +196,12 @@
     where user_name = #{findusername}
 
   </select>
+
+  <select id="showRequestUserbyRelation" resultMap="BaseResultMap" parameterType="string">
+    select
+    <include refid="Base_Column_List" />
+    from iwalker_user
+    where user_name=#{username}
+  </select>
+
 </mapper>

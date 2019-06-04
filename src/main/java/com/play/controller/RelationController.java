@@ -51,7 +51,7 @@ public class RelationController {
     //显示好友请求
     @RequestMapping(value = "showrequest.do", method = RequestMethod.POST)
     @ResponseBody
-    public ServerResponse<List<Relation>> showrequest(HttpSession session) {
+    public ServerResponse<List<User>> showrequest(HttpSession session) {
         User currentUser = (User) session.getAttribute(Const.CURRENT_USER);
         if (currentUser == null){
             return ServerResponse.createByErrorMessage("用户未登录");
