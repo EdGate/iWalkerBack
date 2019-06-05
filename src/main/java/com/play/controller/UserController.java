@@ -54,7 +54,11 @@ public class UserController {
         // 用户名与 id 不能修改
         user.setId(currentUser.getId());
         user.setUserName(currentUser.getUserName());
-        return iUserService.modify(user, file);
+        ServerResponse<User> response = iUserService.modify(user, file);
+        if (response.isSuccess()){
+            session.setAttribute(Const.CURRENT_USER, response.getData());
+        }
+        return response;
     }
 
     // 登出
@@ -73,7 +77,18 @@ public class UserController {
         if (currentUser == null){
             return ServerResponse.createByErrorMessage("用户未登录");
         }
-        return ServerResponse.createBySuccessData(currentUser);
+        return iUserService.get(currentUser.getUserName());
+    }
+
+    // 获取用户信息
+    @RequestMapping(value = "get_user_friend.do", method = RequestMethod.POST)
+    @ResponseBody
+    public ServerResponse<User> getUserFriend(String userName, HttpSession session) {
+        User currentUser = (User) session.getAttribute(Const.CURRENT_USER);
+        if (currentUser == null){
+            return ServerResponse.createByErrorMessage("用户未登录");
+        }
+        return iUserService.getFriend(userName, currentUser);
     }
 
     //非好友搜索

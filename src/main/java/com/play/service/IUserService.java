@@ -11,6 +11,8 @@ public interface IUserService {
     ServerResponse<String> register(User user);
 
     ServerResponse<User> modify(User user, MultipartFile file);
+    ServerResponse<User> get(String userName);
+    ServerResponse<User> getFriend(String userName, User user);
 
 
     ServerResponse<List<User>> findfriend(User user,String findname);

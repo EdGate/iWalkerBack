@@ -44,7 +44,7 @@ public class ImageServiceImpl implements IImageService {
 
         // 保存文件
         String path = ImageUtil.getImagePath(file);
-        image.setImage(ImageUtil.getImageName(file));
+        image.setImage(ImageUtil.getImageName());
         try {
             file.transferTo(new File(path));
         } catch (IOException e) {
@@ -57,6 +57,7 @@ public class ImageServiceImpl implements IImageService {
         }
 
         Image retImage = imageMapper.selectByActivityIdOrder(image.getActivityId(), image.getOrder());
+        retImage.setImage(ImageUtil.getFullImagePath(retImage.getImage()));
         return ServerResponse.createBySuccessData(retImage);
     }
 
@@ -68,6 +69,9 @@ public class ImageServiceImpl implements IImageService {
             return ServerResponse.createByErrorMessage("没有操作权限！");
         }
         List<Image> imageList = imageMapper.selectImageByActivityId(activityId);
+        for (Image image: imageList) {
+            image.setImage(ImageUtil.getFullImagePath(image.getImage()));
+        }
         return ServerResponse.createBySuccessData(imageList);
     }
 

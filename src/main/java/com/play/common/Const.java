@@ -11,6 +11,5 @@ public class Const {
         byte IS_FRIEND = 1;
         byte REFUSE = 2;
         byte DELETE= 3;
-
     }
 }

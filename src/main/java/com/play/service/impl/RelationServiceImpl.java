@@ -5,9 +5,11 @@ import com.play.common.Const;
 import com.play.common.ServerResponse;
 import com.play.dao.RelationMapper;
 import com.play.dao.UserMapper;
+import com.play.pojo.Image;
 import com.play.pojo.Relation;
 import com.play.pojo.User;
 import com.play.service.IRelationService;
+import com.play.util.ImageUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +32,9 @@ public class RelationServiceImpl implements IRelationService {
         relation.setModifyTime(null);
         byte default_status=0;
         relation.setStatus(default_status);
+        if(applicant.equals(receiver)){
+            return  ServerResponse.createByErrorMessage("你不能加自己为好友");
+        }
         Relation judgerelation=relationMapper.getfriend(applicant,receiver);
         if(judgerelation!=null&&judgerelation.getStatus()!=Const.RELATION_STATUS.REFUSE&&judgerelation.getStatus()!=Const.RELATION_STATUS.DELETE){
             if (judgerelation.getStatus() == 0) {
@@ -52,22 +57,15 @@ public class RelationServiceImpl implements IRelationService {
         if(relation==null){
             return ServerResponse.createByErrorMessage("操作失败");
         }
-        if(relation.getStatus()== Const.RELATION_STATUS.IS_FRIEND){
-            return ServerResponse.createBySuccessMessage("已经是好友");
+        if(relation.getStatus().equals(status)){
+            return ServerResponse.createBySuccessMessage("操作成功");
         }
-        else if(relation.getStatus()==Const.RELATION_STATUS.REFUSE||relation.getStatus()==Const.RELATION_STATUS.DELETE){
-            return ServerResponse.createByErrorMessage("操作失败");
-
-        }
-        if(relation.getApplicant().equals(receiver)){
-            return ServerResponse.createByErrorMessage("操作失败");
-        }
-        relation.setStatus(Const.RELATION_STATUS.IS_FRIEND);
+        relation.setStatus(status);
         if(relationMapper.updateByPrimaryKeySelective(relation)==0){
             return ServerResponse.createByErrorMessage("数据库失败");
         }
 
-        return ServerResponse.createBySuccessMessage("好友请求确认");
+        return ServerResponse.createBySuccessMessage("操作成功");
     }
     @Override
     public ServerResponse<List<User>> showrequest(User user){
@@ -83,6 +81,7 @@ public class RelationServiceImpl implements IRelationService {
                     test1.setPassword(null);
                     test1.setCreateTime(null);
                     test1.setModifyTime(null);
+                    test1.setImage(ImageUtil.getFullImagePath(test1.getImage()));
                     allrequest.add(test1);
                 }
             }else{
@@ -91,6 +90,7 @@ public class RelationServiceImpl implements IRelationService {
                     test2.setPassword(null);
                     test2.setCreateTime(null);
                     test2.setModifyTime(null);
+                    test2.setImage(ImageUtil.getFullImagePath(test2.getImage()));
                     allrequest.add(test2);
                 }
             }
@@ -118,9 +118,11 @@ public class RelationServiceImpl implements IRelationService {
             user2.setExtra(null);
             if(onefriendname.getApplicant().equals(user.getUserName())){
                 friendList.add(user2);
+                user2.setImage(ImageUtil.getFullImagePath(user2.getImage()));
             }
             else if(onefriendname.getReceiver().equals(user.getUserName())){
                 friendList.add(user1);
+                user1.setImage(ImageUtil.getFullImagePath(user1.getImage()));
             }
         }
         return ServerResponse.createBySuccess("查询成功", friendList);

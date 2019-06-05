@@ -8,6 +8,7 @@ import com.play.dao.LikeMapper;
 import com.play.dao.RelationMapper;
 import com.play.pojo.*;
 import com.play.service.IActivityService;
+import com.play.util.ImageUtil;
 import com.play.vo.ActivityImageVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -114,6 +115,12 @@ public class ActivityServiceImpl implements IActivityService {
     }
 
     @Override
+    public ServerResponse<List<ActivityImageVo>> getActivitiesBySelf(User user, Integer limit, Integer offset) {
+        List<Activity> activityList = activityMapper.selectByUserName(user.getUserName(), limit, offset);
+        return ServerResponse.createBySuccessData(transformActivitiesToVo(activityList, user));
+    }
+
+    @Override
     public ServerResponse<List<Activity>> getActivitiesByLocationName(String locationName) {
         List<Activity> activityList = activityMapper.selectByLocationName(locationName);
         for (Activity activity : activityList) {
@@ -158,6 +165,9 @@ public class ActivityServiceImpl implements IActivityService {
 
     private ActivityImageVo createActivityImageVo(Activity activity) {
         List<Image> imageList = imageMapper.selectImageByActivityId(activity.getId());
+        for (Image image : imageList) {
+            image.setImage(ImageUtil.getFullImagePath(image.getImage()));
+        }
         ActivityImageVo activityImageVo = new ActivityImageVo();
         activityImageVo.setId(activity.getId());
         activityImageVo.setContent(activity.getContent());

@@ -42,7 +42,7 @@ public class UserServiceImpl implements IUserService {
 
         // 序列化时不返回密码
         user.setPassword(StringUtils.EMPTY);
-
+        user.setImage(ImageUtil.getFullImagePath(user.getImage()));
         return ServerResponse.createBySuccess("登录成功", user);
     }
 
@@ -88,7 +88,7 @@ public class UserServiceImpl implements IUserService {
         // 如果有传头像
         if (file != null) {
             String path = ImageUtil.getImagePath(file);
-            user.setImage(ImageUtil.getImageName(file));
+            user.setImage(ImageUtil.getImageName());
             try {
                 file.transferTo(new File(path));
             } catch (IOException e) {
@@ -100,7 +100,31 @@ public class UserServiceImpl implements IUserService {
         if (resCount == 0) {
             return ServerResponse.createByErrorMessage("修改信息失败！");
         }
+        user.setImage(ImageUtil.getFullImagePath(user.getImage()));
         return ServerResponse.createBySuccessData(user);
+    }
+
+    @Override
+    public ServerResponse<User> get(String userName) {
+        User user = userMapper.findUserByUsername(userName);
+        if (user == null) {
+            return ServerResponse.createByErrorMessage("没有该用户");
+        }
+        user.setImage(ImageUtil.getFullImagePath(user.getImage()));
+        return ServerResponse.createBySuccessData(user);
+    }
+
+    @Override
+    public ServerResponse<User> getFriend(String userName, User user) {
+        if (relationMapper.getfriend(userName, user.getUserName()) == null) {
+            return ServerResponse.createByErrorMessage("没有权限");
+        }
+        User friend = userMapper.findUserByUsername(userName);
+        if (friend == null) {
+            return ServerResponse.createByErrorMessage("没有该用户");
+        }
+        friend.setImage(ImageUtil.getFullImagePath(friend.getImage()));
+        return ServerResponse.createBySuccessData(friend);
     }
 
     @Override
@@ -114,12 +138,14 @@ public class UserServiceImpl implements IUserService {
         else{
 
             for(User oneresultUser:resultUser){
+
                 Relation relation=relationMapper.getfriend(user.getUserName(),oneresultUser.getUserName());
                 if(relation==null||relation.getStatus()!= Const.RELATION_STATUS.IS_FRIEND){
                     oneresultUser.setPassword(StringUtils.EMPTY);
                     oneresultUser.setCreateTime(null);
                     oneresultUser.setModifyTime(null);
                     oneresultUser.setExtra(null);
+                    oneresultUser.setImage(ImageUtil.getFullImagePath(oneresultUser.getImage()));
                     newresultUser.add(oneresultUser);
                 }
             }
