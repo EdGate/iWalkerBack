@@ -80,12 +80,15 @@ public class CommentServiceImpl implements ICommentService {
         if(activity == null ){
             return ServerResponse.createByErrorMessage("无此动态");
         }
+        if (user.getUserName().equals(activity.getUserName())) {
+            return ServerResponse.createBySuccessMessage("成功");
+        }
         Relation relation= relationMapper.getfriend(user.getUserName(),activity.getUserName());
         if(relation==null){
             return ServerResponse.createByErrorMessage("无权限操作");
         }
 
-        if (!activity.getUserName().equals(user.getUserName())&&relation.getStatus()!=1) {
+        if (relation.getStatus()!=1) {
             //判断是否为好友 1为好友状态
             return ServerResponse.createByErrorMessage("无权限操作");
         }
